@@ -1,0 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background: linear-gradient(135deg, #f6f8fd 0%, #f1f4f9 100%);
+  color: #1a202c;
+  font-family: 'Assistant', sans-serif;
+  overflow-x: hidden;
+}
+
+.kid-card {
+  @apply bg-white rounded-[2rem] shadow-[0_10px_0_0_rgba(0,0,0,0.05)] border-2 border-transparent hover:border-blue-400 hover:-translate-y-1 transition-all duration-300;
+}
+
+.btn-pop {
+  @apply active:scale-95 transition-transform duration-150 shadow-[0_5px_0_0_rgba(0,0,0,0.1)];
+}
