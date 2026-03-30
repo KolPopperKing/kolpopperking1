@@ -1,0 +1,28 @@
+// פתרון סופי - שימוש באימוג'י במקום אייקונים שבורים
+export const GAME_CATALOG: Record<string, any> = {
+    true_false: { label: "נכון או לא", icon: "✅", color: "bg-orange-500", prompt: "Return JSON: { statement: string, isCorrect: boolean, explanation: string }" },
+    sort_order: { label: "סדר חכם", icon: "🔢", color: "bg-green-500", prompt: "Return JSON: { items: string[] }" },
+    match_it: { label: "חבר נכון", icon: "🔗", color: "bg-purple-500", prompt: "Return JSON: { pairs: { left: string, right: string }[] }" },
+    trivia: { label: "בחן אותי", icon: "🧠", color: "bg-blue-500", prompt: "Return JSON: { questions: [{ question: string, options: string[], correct: number }] }" },
+    flip_match: { label: "הפוך וגלה", icon: "🔄", color: "bg-pink-500", prompt: "Return JSON: { cards: { id: number, content: string, pairId: number }[] }" },
+    knowledge_card: { label: "כרטיס ידע", icon: "📇", color: "bg-teal-500", prompt: "Return JSON: { title: string, content: string, facts: string[] }" },
+    fill_blank: { label: "השלם את החסר", icon: "✍️", color: "bg-indigo-500", prompt: "Return JSON: { sentence: string, missingWord: string }" },
+    scrambled_words: { label: "ערבוב אותיות", icon: "🔠", color: "bg-red-500", prompt: "Return JSON: { original: string, hint: string }" },
+    surprise_box: { label: "קופסת הפתעה", icon: "🎁", color: "bg-orange-400", prompt: "Return JSON: { item: string, description: string }" },
+    color_pop: { label: "פיצוץ צבעוני", icon: "🎈", color: "bg-red-600", prompt: "Return JSON: { questions: { color: string, q: string, a: string }[] }" },
+    fast_catch: { label: "תפוס מהר", icon: "⚡", color: "bg-yellow-500", prompt: "Return JSON: { words: { text: string, isTarget: boolean }[] }" },
+    write_answer: { label: "כתוב וענה", icon: "💬", color: "bg-cyan-500", prompt: "Return JSON: { question: string, correctAnswer: string }" },
+    wheel_luck: { label: "גלגל מזל", icon: "🎡", color: "bg-purple-600", prompt: "Return JSON: { segments: { label: string, task: string }[] }" },
+    word_puzzle: { label: "פאזל מילים", icon: "🧩", color: "bg-lime-500", prompt: "Return JSON: { pieces: string[], solution: string }" },
+    word_hunt: { label: "ציד מילים", icon: "🔍", color: "bg-green-600", prompt: "Return JSON: { grid: string[][], hiddenWords: string[] }" },
+    trivia_run: { label: "מירוץ ידע", icon: "🏃", color: "bg-blue-400", prompt: "Return JSON: { path: { station: string, challenge: string }[] }" },
+    wise_flight: { label: "טיסת חכמים", icon: "✈️", color: "bg-sky-400", prompt: "Return JSON: { targets: { text: string, isCorrect: boolean }[] }" },
+    priorities: { label: "סדר עדיפויות", icon: "📊", color: "bg-fuchsia-500", prompt: "Return JSON: { items: { name: string, importance: number }[] }" },
+    card_draw: { label: "שלוף קלף", icon: "🃏", color: "bg-slate-600", prompt: "Return JSON: { cards: { text: string }[] }" },
+    escape_room: { label: "חדר בריחה", icon: "🔓", color: "bg-amber-800", prompt: "Return JSON: { puzzle_text: string, solution: string }" },
+    hangman: { label: "איש תלוי", icon: "👤", color: "bg-red-400", prompt: "Return JSON: { word: string, hint: string }" },
+    tic_tac_toe: { label: "איקס עיגול", icon: "⭕", color: "bg-green-400", prompt: "Return JSON: { questions: { q: string, a: string }[] }" },
+    winners_track: { label: "מסלול מנצחים", icon: "🏁", color: "bg-yellow-600", prompt: "Return JSON: { checkpoints: { title: string, task: string }[] }" },
+    image_riddle: { label: "חידות בתמונה", icon: "🖼️", color: "bg-emerald-500", prompt: "Return JSON: { prompt_for_image: string, answer: string }" },
+    snakes_ladders: { label: "סולמות ונחשים", icon: "🪜", color: "bg-green-700", prompt: "Return JSON: { board_events: { tile: number, msg: string }[] }" }
+  };
