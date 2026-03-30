@@ -9,6 +9,7 @@ export default function EditGamePage() {
   const { id } = useParams();
   const [content, setContent] = useState<any[]>([]);
   const [game, setGame] = useState<any>(null);
+  const [isGenerating, setIsGenerating] = useState(false); // מצב טעינה ל-AI
 
   useEffect(() => {
     const fetchGame = async () => {
@@ -21,11 +22,38 @@ export default function EditGamePage() {
     fetchGame();
   }, [id]);
 
+  // פונקציה חדשה שקוראת ל-API של ה-AI ששמרנו ב-route.ts
+  const generateAI = async () => {
+    const topic = prompt("על איזה נושא תרצה שה-AI יכתוב שאלות?");
+    if (!topic) return;
+
+    setIsGenerating(true);
+    try {
+      const res = await fetch('/api/generate-game', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          gameType: game.game_type,
+          topic: topic,
+          age: "10" // גיל ברירת מחדל
+        }),
+      });
+
+      const aiData = await res.json();
+      if (aiData && Array.isArray(aiData)) {
+        setContent(aiData); // מעדכן את התוכן במסך עם מה שה-AI יצר
+      }
+    } catch (err) {
+      alert("שגיאה ביצירת תוכן מה-AI");
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
   const renderFields = (item: any, index: number) => {
     const type = game?.game_type?.toLowerCase() || "";
     const inputCls = "w-full p-4 bg-slate-50 border rounded-2xl mb-2 font-bold text-right";
 
-    // לוגיקה לכל סוגי המשחקים (ה-25 מחולקים למבנים דומים)
     if (type.includes('wheel')) {
       return (
         <div className="bg-purple-50 p-4 rounded-3xl border border-purple-100">
@@ -42,7 +70,20 @@ export default function EditGamePage() {
         </div>
       );
     }
-    // ברירת מחדל לכל השאר
+    // תמיכה בטריוויה (ans1-ans4)
+    if (type.includes('trivia') || type.includes('quiz')) {
+        return (
+          <div className="bg-blue-50 p-4 rounded-3xl border border-blue-100 space-y-2">
+            <input placeholder="השאלה" className={inputCls} value={item.question || ""} onChange={e => update(index, 'question', e.target.value)} />
+            <div className="grid grid-cols-2 gap-2">
+                <input placeholder="תשובה נכונה (1)" className={`${inputCls} border-green-300`} value={item.ans1 || ""} onChange={e => update(index, 'ans1', e.target.value)} />
+                <input placeholder="תשובה 2" className={inputCls} value={item.ans2 || ""} onChange={e => update(index, 'ans2', e.target.value)} />
+                <input placeholder="תשובה 3" className={inputCls} value={item.ans3 || ""} onChange={e => update(index, 'ans3', e.target.value)} />
+                <input placeholder="תשובה 4" className={inputCls} value={item.ans4 || ""} onChange={e => update(index, 'ans4', e.target.value)} />
+            </div>
+          </div>
+        );
+    }
     return (
       <div className="bg-blue-50 p-4 rounded-3xl border border-blue-100">
         <input placeholder="שאלה / מושג" className={inputCls} value={item.question || item.sideA || ""} onChange={e => update(index, 'question', e.target.value)} />
@@ -67,8 +108,20 @@ export default function EditGamePage() {
   return (
     <div className="max-w-4xl mx-auto p-8 pt-24" dir="rtl">
       <div className="flex justify-between items-center mb-10">
-        <h1 className="text-3xl font-black italic">עריכת {game.title}</h1>
-        <button onClick={save} className="bg-blue-600 text-white px-10 py-4 rounded-2xl font-black shadow-lg">שמור הכל</button>
+        <div>
+           <h1 className="text-3xl font-black italic">עריכת {game.title}</h1>
+           <p className="text-slate-500 font-bold">סוג: {game.game_type}</p>
+        </div>
+        <div className="flex gap-4">
+            <button 
+                onClick={generateAI} 
+                disabled={isGenerating}
+                className="bg-purple-600 text-white px-6 py-4 rounded-2xl font-black shadow-lg hover:bg-purple-700 transition-all disabled:opacity-50"
+            >
+                {isGenerating ? "ה-AI יוצר..." : "⚡ צור תוכן עם AI"}
+            </button>
+            <button onClick={save} className="bg-blue-600 text-white px-10 py-4 rounded-2xl font-black shadow-lg">שמור הכל</button>
+        </div>
       </div>
       <div className="space-y-6">
         {content.map((item, idx) => (
